@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lesson01/index.md</title>
+    <title>index.md</title>
     <style>
         /* Pygments Syntax Highlighting */
         pre { line-height: 125%; }
@@ -168,117 +168,73 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
     <a href="../lesson02/" style="text-decoration: none; color: #0366d6; text-align: right;">Next →</a>
 </nav>
 
-<h1>Problem 1: Basic Integer Addition (No <code>ccall</code>/<code>cwrap</code>)</h1>
-<h2>Question</h2>
-<p>Write a C function that takes two integers and returns their sum. Export this function to JavaScript using Emscripten, but <strong>do not use <code>ccall</code> or <code>cwrap</code></strong>. Instead, manually manage the function’s address and call it using <code>Module._functionName</code>.</p>
-<h3>Requirements:</h3>
-<ol>
-<li>Create a C function <code>int add(int a, int b)</code> that returns the sum of two integers.</li>
-<li>Compile the C code to WebAssembly using Emscripten.</li>
-<li>Access the function in JavaScript using <code>Module._add</code> and call it directly.</li>
-<li>Display the result of the addition on a webpage.</li>
-</ol>
-<h3>Learning Goals:</h3>
-<ul>
-<li>Understand how to compile a C function with Emscripten and access it from JavaScript.</li>
-<li>Learn how to call exported functions directly using <code>Module._functionName</code>.</li>
-<li>Get comfortable with the Emscripten build process and JavaScript integration.</li>
-</ul>
-<hr />
+<h1>Problem 1: Basic Integer Addition</h1>
+<h2>Problem Statement</h2>
+<p>Create a <code>bindings.c</code> file with a function <code>int addIntegers(int a, int b)</code>. Export this function to javascript using emscripten and call it using <code>Module._add</code>, displaying the result on the webpage.</p>
 <h2>Hints</h2>
 <ol>
-<li>
-<p><strong>Exporting Functions</strong>:<br />
-   When compiling with Emscripten, use the <code>-s EXPORTED_FUNCTIONS="['_add']"</code> flag to ensure the <code>add</code> function is exported and accessible in JavaScript.  </p>
-</li>
-<li>
-<p><strong>Accessing Functions</strong>:<br />
-   After loading the compiled WebAssembly module, Emscripten exposes exported functions as <code>Module._functionName</code>. For example, if your function is named <code>add</code>, you can call it in JavaScript as <code>Module._add</code>.</p>
-</li>
-<li>
-<p><strong>Compiling the Code</strong>:<br />
-   Use the following command to compile your C code into WebAssembly:<br />
-<code>bash
-   emcc add.c -s EXPORTED_FUNCTIONS="['_add']" -o add.js</code></p>
-</li>
-<li>
-<p><strong>Calling the Function</strong>:<br />
-   When calling the function in JavaScript, ensure that the WebAssembly runtime has been initialized. Use <code>Module.onRuntimeInitialized</code> to safely call the function after the module is ready.</p>
-</li>
+<li>For the HTML webpage <code>demo.html</code>, you may find it useful to use the following template. Emscripten will populate the other methods of Module after loading <code>bindings.js</code>.</li>
 </ol>
-<hr />
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;result&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`5 + 3 = </span><span class="si">${</span><span class="nx">your</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">here</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bindings.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<ol>
+<li>To compile your C code, use <code>emcc bindings.c -s EXPORTED_FUNCTIONS="['_addIntegers']" -o add.js</code></li>
+</ol>
 <h2>Solution</h2>
-<h3>Step 1: Write the C Code (<code>add.c</code>)</h3>
+<ul>
+<li>In the file <code>bindings.c</code>, we use the <code>EMSCRIPTEN_KEEPALIVE</code> macro to ensure our function isn't optimized away by the compiler.</li>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;emscripten/emscripten.h&gt;</span>
 
-<span class="c1">// Export the function so it can be accessed from JavaScript</span>
 <span class="n">EMSCRIPTEN_KEEPALIVE</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">addIntegers</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Step 2: Compile the C Code</h3>
-<p>Run the following command to compile the C code into WebAssembly:</p>
-<div class="codehilite"><pre><span></span><code>emcc<span class="w"> </span>add.c<span class="w"> </span>-s<span class="w"> </span><span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_add&#39;]&quot;</span><span class="w"> </span>-o<span class="w"> </span>add.js
+<ul>
+<li>demo.html:</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Result of addition:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>Calculating...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="w">    </span><span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`5 + 3 = </span><span class="si">${</span><span class="nx">Module</span><span class="p">.</span><span class="nx">_addIntegers</span><span class="p">(</span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bindings.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </code></pre></div>
 
 <ul>
-<li><code>-s EXPORTED_FUNCTIONS="['_add']"</code> ensures the <code>add</code> function is exported.</li>
-<li><code>-o add.js</code> specifies the output JavaScript file that will load the WebAssembly module.</li>
+<li>index.html will load the file bindings.js, which we compile via </li>
 </ul>
-<h3>Step 3: Create the HTML File (<code>index.html</code>)</h3>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Basic Integer Addition<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Basic Integer Addition<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Result of 7 + 8:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>Calculating...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-
-    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">        </span><span class="c1">// Initialize the Emscripten Module</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
-<span class="w">        </span><span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Call the exported function directly</span>
-<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_add</span><span class="p">(</span><span class="mf">7</span><span class="p">,</span><span class="w"> </span><span class="mf">8</span><span class="p">);</span>
-
-<span class="w">            </span><span class="c1">// Display the result on the webpage</span>
-<span class="w">            </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`7 + 8 = </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;add.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code>emcc<span class="w"> </span>bindings.c<span class="w"> </span>-s<span class="w"> </span><span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_addIntegers&#39;]&quot;</span><span class="w"> </span>-o<span class="w"> </span>bindings.js
 </code></pre></div>
 
-<h3>Explanation:</h3>
-<ol>
-<li><strong>C Code</strong>: The <code>add</code> function takes two integers as input and returns their sum. The <code>EMSCRIPTEN_KEEPALIVE</code> macro ensures the function is not removed during optimization.</li>
-<li><strong>Compilation</strong>: The <code>emcc</code> command compiles the C code into WebAssembly and generates a JavaScript file (<code>add.js</code>) to load the module.</li>
-<li><strong>JavaScript Integration</strong>: The <code>Module._add</code> function is used to call the <code>add</code> function directly. The result is displayed on the webpage.</li>
-</ol>
-<hr />
+<ul>
+<li>The easiest way to run the code locally is to run a Python server, for example by running <code>python -m http.server</code> and then navigating to <code>http://0.0.0.0:8000/demo.html</code>.</li>
+</ul>
 <h2>Demo</h2>
-<p>Result of 7 + 8: <span id="result">Calculating...</span></p>
-<script>
-var Module = {};
-Module.onRuntimeInitialized = function() {
-    const result = Module._add(7, 8);
-    document.getElementById('result').innerHTML = `7 + 8 = ${result}`;
-};
-</script>
-<script src="add.js"></script>
-
-<hr />
-<h3>How It Works:</h3>
-<ol>
-<li>When the webpage loads, the <code>add.js</code> file initializes the WebAssembly module.</li>
-<li>Once the module is ready (<code>onRuntimeInitialized</code>), the <code>Module._add</code> function is called with the arguments <code>7</code> and <code>8</code>.</li>
-<li>The result of the addition is displayed in the <code>&lt;p&gt;</code> element with the ID <code>result</code>.</li>
-</ol>
+<p>Demo.html iframe:</p>
+<div style="background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 15px; margin: 15px 0;">
+    <iframe 
+        src="demo.html" 
+        style="width: 100%; height: 200px; border: none; overflow: hidden;"
+        title="WebAssembly Addition Demo"
+    ></iframe>
+</div>
     </div>
 </body>
 </html>

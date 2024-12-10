@@ -1,0 +1,12 @@
+<html><body>
+  <p>Result of addition:</p>
+  <p id="result">Calculating...</p>
+
+  <script>
+    var Module = {};
+    Module.onRuntimeInitialized = function() {
+        document.getElementById('result').innerHTML = `5 + 3 = ${Module._addIntegers(5, 3)}`;
+    };
+  </script>
+  <script src="bindings.js"></script>
+</body></html>

@@ -4,117 +4,75 @@
     <a href="../lesson02/" style="text-decoration: none; color: #0366d6; text-align: right;">Next →</a>
 </nav>
 
-# Problem 1: Basic Integer Addition (No `ccall`/`cwrap`)
+# Problem 1: Basic Integer Addition
 
-## Question
+## Problem Statement
 
-Write a C function that takes two integers and returns their sum. Export this function to JavaScript using Emscripten, but **do not use `ccall` or `cwrap`**. Instead, manually manage the function’s address and call it using `Module._functionName`.
-
-### Requirements:
-1. Create a C function `int add(int a, int b)` that returns the sum of two integers.
-2. Compile the C code to WebAssembly using Emscripten.
-3. Access the function in JavaScript using `Module._add` and call it directly.
-4. Display the result of the addition on a webpage.
-
-### Learning Goals:
-- Understand how to compile a C function with Emscripten and access it from JavaScript.
-- Learn how to call exported functions directly using `Module._functionName`.
-- Get comfortable with the Emscripten build process and JavaScript integration.
-
----
+Create a `bindings.c` file with a function `int addIntegers(int a, int b)`. Export this function to javascript using emscripten and call it using `Module._add`, displaying the result on the webpage.
 
 ## Hints
 
-1. **Exporting Functions**:  
-   When compiling with Emscripten, use the `-s EXPORTED_FUNCTIONS="['_add']"` flag to ensure the `add` function is exported and accessible in JavaScript.  
+1. For the HTML webpage `demo.html`, you may find it useful to use the following template. Emscripten will populate the other methods of Module after loading `bindings.js`.
 
-2. **Accessing Functions**:  
-   After loading the compiled WebAssembly module, Emscripten exposes exported functions as `Module._functionName`. For example, if your function is named `add`, you can call it in JavaScript as `Module._add`.
-
-3. **Compiling the Code**:  
-   Use the following command to compile your C code into WebAssembly:  
-   ```bash
-   emcc add.c -s EXPORTED_FUNCTIONS="['_add']" -o add.js
-   ```
-
-4. **Calling the Function**:  
-   When calling the function in JavaScript, ensure that the WebAssembly runtime has been initialized. Use `Module.onRuntimeInitialized` to safely call the function after the module is ready.
-
----
-
-## Solution
-
-### Step 1: Write the C Code (`add.c`)
-```c
-#include <emscripten/emscripten.h>
-
-// Export the function so it can be accessed from JavaScript
-EMSCRIPTEN_KEEPALIVE
-int add(int a, int b) {
-    return a + b;
-}
-```
-
-### Step 2: Compile the C Code
-Run the following command to compile the C code into WebAssembly:
-```bash
-emcc add.c -s EXPORTED_FUNCTIONS="['_add']" -o add.js
-```
-
-- `-s EXPORTED_FUNCTIONS="['_add']"` ensures the `add` function is exported.
-- `-o add.js` specifies the output JavaScript file that will load the WebAssembly module.
-
-### Step 3: Create the HTML File (`index.html`)
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Basic Integer Addition</title>
-</head>
-<body>
-    <h2>Basic Integer Addition</h2>
-    <p>Result of 7 + 8:</p>
-    <p id="result">Calculating...</p>
-
-    <script>
-        // Initialize the Emscripten Module
-        var Module = {};
-        Module.onRuntimeInitialized = function() {
-            // Call the exported function directly
-            const result = Module._add(7, 8);
-
-            // Display the result on the webpage
-            document.getElementById('result').innerHTML = `7 + 8 = ${result}`;
-        };
-    </script>
-    <script src="add.js"></script>
-</body>
-</html>
-```
-
-### Explanation:
-1. **C Code**: The `add` function takes two integers as input and returns their sum. The `EMSCRIPTEN_KEEPALIVE` macro ensures the function is not removed during optimization.
-2. **Compilation**: The `emcc` command compiles the C code into WebAssembly and generates a JavaScript file (`add.js`) to load the module.
-3. **JavaScript Integration**: The `Module._add` function is used to call the `add` function directly. The result is displayed on the webpage.
-
----
-
-## Demo
-
-Result of 7 + 8: <span id="result">Calculating...</span>
-
+``` html
+<span id='result'></span>
 <script>
 var Module = {};
 Module.onRuntimeInitialized = function() {
-    const result = Module._add(7, 8);
-    document.getElementById('result').innerHTML = `7 + 8 = ${result}`;
-};
+    document.getElementById('result').innerHTML = `5 + 3 = ${your code here}`;
+}
 </script>
-<script src="add.js"></script>
+<script src="bindings.js"></script>
+```
 
----
+2. To compile your C code, use `emcc bindings.c -s EXPORTED_FUNCTIONS="['_addIntegers']" -o add.js`
 
-### How It Works:
-1. When the webpage loads, the `add.js` file initializes the WebAssembly module.
-2. Once the module is ready (`onRuntimeInitialized`), the `Module._add` function is called with the arguments `7` and `8`.
-3. The result of the addition is displayed in the `<p>` element with the ID `result`.
+## Solution
+
+* In the file `bindings.c`, we use the `EMSCRIPTEN_KEEPALIVE` macro to ensure our function isn't optimized away by the compiler.
+
+``` c
+#include <emscripten/emscripten.h>
+
+EMSCRIPTEN_KEEPALIVE
+int addIntegers(int a, int b){
+    return a+b;
+}
+```
+
+* demo.html:
+``` html
+<html><body>
+  <p>Result of addition:</p>
+  <p id="result">Calculating...</p>
+
+  <script>
+    var Module = {};
+    Module.onRuntimeInitialized = function() {
+        document.getElementById('result').innerHTML = `5 + 3 = ${Module._addIntegers(5, 3)}`;
+    };
+  </script>
+  <script src="bindings.js"></script>
+</body></html>
+```
+
+* index.html will load the file bindings.js, which we compile via 
+
+``` bash
+emcc bindings.c -s EXPORTED_FUNCTIONS="['_addIntegers']" -o bindings.js
+```
+
+* The easiest way to run the code locally is to run a Python server, for example by running `python -m http.server` and then navigating to `http://0.0.0.0:8000/demo.html`.
+
+## Demo
+
+Demo.html iframe:
+
+<div style="background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 15px; margin: 15px 0;">
+    <iframe 
+        src="demo.html" 
+        style="width: 100%; height: 200px; border: none; overflow: hidden;"
+        title="WebAssembly Addition Demo"
+    ></iframe>
+</div>
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lesson02/index.md</title>
+    <title>index.md</title>
     <style>
         /* Pygments Syntax Highlighting */
         pre { line-height: 125%; }
@@ -162,120 +162,85 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </head>
 <body>
     <div class="container">
-        <div class="codehilite"><pre><span></span><code>&lt;nav style=&quot;display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1rem 0;&quot;&gt;
-    &lt;a href=&quot;../lesson02&quot; style=&quot;text-decoration: none; color: <span class="ni">#0366d6</span>;&quot;&gt;← Previous&lt;/a&gt;
-    &lt;a href=&quot;../&quot; style=&quot;text-decoration: none; color: <span class="ni">#0366d6</span>; text-align: center;&quot;&gt;Up&lt;/a&gt;
-    &lt;a href=&quot;../lesson04/&quot; style=&quot;text-decoration: none; color: <span class="ni">#0366d6</span>; text-align: right;&quot;&gt;Next →&lt;/a&gt;
-&lt;/nav&gt;
+        <nav style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1rem 0;">
+    <a href="../lesson01/" style="text-decoration: none; color: #0366d6;">← Previous</a>
+    <a href="../" style="text-decoration: none; color: #0366d6; text-align: center;">Up</a>
+    <a href="../lesson03/" style="text-decoration: none; color: #0366d6; text-align: right;">Next →</a>
+</nav>
 
-<span class="gh"># Problem 2 (No ccall/ccall): Averaging a Float32 Array</span>
+<h1>Problem 2: Averaging a Float32 Array</h1>
+<h2>Problem Statement</h2>
+<p>Inside <code>bindings.c</code>, write a function <code>float computeAverage(float* arr, int length)</code> computes the average of an array. Export this function to javascript using emscripten and compute the average of a javascript <code>Float32Array</code> using it. </p>
+<p>The intent of this problem is to use <code>Module.HEAPF32.set</code>, <code>_malloc</code>, and <code>_free</code>.</p>
+<h2>Hints</h2>
+<ol>
+<li>
+<p>You'll want to use the <code>emcc</code> argument <code>-s EXPORTED_FUNCTIONS="['_computeAverage', '_malloc', '_free']"</code></p>
+</li>
+<li>
+<p>Use <code>Module._malloc()</code> to allocate memory for the array in the WebAssembly heap. Remember to calculate the size of the memory block in bytes (e.g., <code>array.length * 4</code> for a <code>Float32Array</code>).</p>
+</li>
+<li>
+<p>Use <code>Module.HEAPF32.set()</code> to copy the JavaScript <code>Float32Array</code> into the allocated memory. The pointer returned by <code>malloc</code> must be divided by 4 (since <code>HEAPF32</code> is a 32-bit view of the memory).</p>
+</li>
+<li>
+<p>Remember to free the allocated memory using <code>Module._free()</code></p>
+</li>
+</ol>
+<h2>Solution</h2>
+<ul>
+<li><code>bindings.c</code> has a simple implementation using <code>EMSCRIPTEN_KEEPALIVE</code>.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;emscripten/emscripten.h&gt;</span>
 
-<span class="gu">## Question</span>
-
-Write a C function <span class="sb">`float computeAverage(float* arr, int length);`</span> that takes a pointer to a float array and its length, computes the average, and returns a float. Pass a <span class="sb">`Float32Array`</span> from JavaScript to this function without using <span class="sb">`ccall`</span> or <span class="sb">`cwrap`</span>. Instead, manually write the data into <span class="sb">`HEAPF32`</span> and pass the pointer to the C function.
-
-<span class="gu">### Learning Goals:</span>
-<span class="k">-</span><span class="w"> </span>Gain hands-on experience with the Emscripten HEAP memory model.
-<span class="k">-</span><span class="w"> </span>Understand how to allocate memory in JavaScript and pass typed arrays to C functions.
-<span class="k">-</span><span class="w"> </span>Learn how to index <span class="sb">`HEAPF32`</span> and ensure correct data transfer between JavaScript and WebAssembly.
-
----
-
-<span class="gu">## Hints</span>
-
-<span class="k">1.</span> <span class="gs">**Exporting Functions**</span>:  
-   Use the <span class="sb">`-s EXPORTED_FUNCTIONS`</span> flag to ensure your C function is accessible from JavaScript. For this problem, you’ll need to export <span class="sb">`computeAverage`</span>, <span class="sb">`malloc`</span>, and <span class="sb">`free`</span>.
-
-<span class="k">2.</span> <span class="gs">**Memory Allocation**</span>:  
-   Use <span class="sb">`Module._malloc()`</span> to allocate memory for the array in the WebAssembly heap. Remember to calculate the size of the memory block in bytes (e.g., <span class="sb">`array.length * 4`</span> for a <span class="sb">`Float32Array`</span>).
-
-<span class="k">3.</span> <span class="gs">**Writing to HEAPF32**</span>:  
-   Use <span class="sb">`Module.HEAPF32.set()`</span> to copy the JavaScript <span class="sb">`Float32Array`</span> into the allocated memory. The pointer returned by <span class="sb">`malloc`</span> must be divided by 4 (since <span class="sb">`HEAPF32`</span> is a 32-bit view of the memory).
-
-<span class="k">4.</span> <span class="gs">**Freeing Memory**</span>:  
-   Always free the allocated memory using <span class="sb">`Module._free()`</span> after the computation is complete to avoid memory leaks.
-
-<span class="k">5.</span> <span class="gs">**Accessing the Function**</span>:  
-   Call the exported C function using <span class="sb">`Module._computeAverage(ptr, length)`</span> where <span class="sb">`ptr`</span> is the pointer to the array in memory.
-
----
-
-<span class="gu">## Solution</span>
-
-<span class="gu">### Step 1: Write the C Code</span>
-
-Create a file <span class="sb">`bindings.c`</span> with the following implementation:
-
-```c
-// bindings.c
-<span class="gh">#include &lt;emscripten/emscripten.h&gt;</span>
-
-EMSCRIPTEN_KEEPALIVE
-float computeAverage(float* arr, int length) {
-    float sum = 0;
-    for (int i = 0; i &lt; length; i++) {
-        sum += arr[i];
-    }
-    return sum / length;
-}
+<span class="n">EMSCRIPTEN_KEEPALIVE</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">computeAverage</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">length</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
-<h3>Step 2: Compile the C Code</h3>
+<ul>
+<li>Inside the javascript of <code>demo.html</code>, we have a bit more work to do. We again use <code>Module.onRuntimeInitialized</code>, but now we have to carefully construct and set the arrays.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Average of the array [1,2,3,4,5,6]:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>Calculating...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="o">=</span><span class="p">{};</span>
+<span class="w">    </span><span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="o">=</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="o">=</span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="mf">3</span><span class="p">,</span><span class="mf">4</span><span class="p">,</span><span class="mf">5</span><span class="p">,</span><span class="mf">6</span><span class="p">]);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">ptr</span><span class="o">=</span><span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="o">*</span><span class="mf">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// 4 bytes per float</span>
+<span class="w">        </span><span class="c1">// &gt;&gt;2 divides by four to get the correct index.</span>
+<span class="w">        </span><span class="nx">Module</span><span class="p">.</span><span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span><span class="nx">ptr</span><span class="o">&gt;&gt;</span><span class="mf">2</span><span class="p">);</span><span class="w"> </span>
+
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="o">=</span><span class="nx">Module</span><span class="p">.</span><span class="nx">_computeAverage</span><span class="p">(</span><span class="nx">ptr</span><span class="p">,</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+
+<span class="w">        </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_free</span><span class="p">(</span><span class="nx">ptr</span><span class="p">);</span>
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Average = </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bindings.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>Compile the C code to WebAssembly using the following command:</p>
 <div class="codehilite"><pre><span></span><code>emcc<span class="w"> </span>bindings.c<span class="w"> </span>-s<span class="w"> </span><span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_computeAverage&#39;, &#39;_malloc&#39;, &#39;_free&#39;]&quot;</span><span class="w"> </span>-o<span class="w"> </span>bindings.js
 </code></pre></div>
 
-<h3>Step 3: Write the HTML and JavaScript</h3>
-<p>Create an <code>index.html</code> file to load the WebAssembly module and interact with it:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Demo<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Average of [10.5, 20.3, 30.7, 40.1]:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>Calculating...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-
-    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
-<span class="w">      </span><span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Step 1: Create a Float32Array in JavaScript</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Float32Array</span><span class="p">([</span><span class="mf">10.5</span><span class="p">,</span><span class="w"> </span><span class="mf">20.3</span><span class="p">,</span><span class="w"> </span><span class="mf">30.7</span><span class="p">,</span><span class="w"> </span><span class="mf">40.1</span><span class="p">]);</span>
-
-<span class="w">        </span><span class="c1">// Step 2: Allocate memory in the WebAssembly heap</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// 4 bytes per float</span>
-
-<span class="w">        </span><span class="c1">// Step 3: Copy the Float32Array into the WebAssembly heap</span>
-<span class="w">        </span><span class="nx">Module</span><span class="p">.</span><span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span><span class="w"> </span><span class="nx">ptr</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// Divide by 4 to get the correct index</span>
-
-<span class="w">        </span><span class="c1">// Step 4: Call the C function</span>
-<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_computeAverage</span><span class="p">(</span><span class="nx">ptr</span><span class="p">,</span><span class="w"> </span><span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// Step 5: Free the allocated memory</span>
-<span class="w">        </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_free</span><span class="p">(</span><span class="nx">ptr</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// Step 6: Display the result</span>
-<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Average = </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="w">      </span><span class="p">};</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bindings.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<hr />
 <h2>Demo</h2>
-<p>Average of [10.5, 20.3, 30.7, 40.1]: <span id="result">Calculating...</span></p>
-<script>
-var Module = {};
-Module.onRuntimeInitialized = function () {
-  const numbers = new Float32Array([10.5, 20.3, 30.7, 40.1]);
-  const ptr = Module._malloc(numbers.length * 4);
-  Module.HEAPF32.set(numbers, ptr >> 2);
-  const result = Module._computeAverage(ptr, numbers.length);
-  Module._free(ptr);
-  document.getElementById('result').innerHTML = `Average = ${result}`;
-};
-</script>
-<script src="bindings.js"></script>
-<p>```</p>
+<p>Demo.html iframe:</p>
+<div style="background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 15px; margin: 15px 0;">
+    <iframe 
+        src="demo.html" 
+        style="width: 100%; height: 200px; border: none; overflow: hidden;"
+        title="WebAssembly Addition Demo"
+    ></iframe>
+</div>
     </div>
 </body>
 </html>

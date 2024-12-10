@@ -1,0 +1,20 @@
+<html><body>
+  <p>Computing the average of [1,2,3,4,5,6]:</p>
+  <p id="result">Calculating...</p>
+
+  <script>
+    var Module={};
+    Module.onRuntimeInitialized=function() {
+        const numbers=new Float32Array([1,2,3,4,5,6]);
+        const ptr=Module._malloc(numbers.length*4); // 4 bytes per float
+        // >>2 divides by four to get the correct index.
+        Module.HEAPF32.set(numbers,ptr>>2); 
+
+        const result=Module._computeAverage(ptr,numbers.length);
+
+        Module._free(ptr);
+        document.getElementById('result').innerHTML = `Average = ${result}`;
+    };
+  </script>
+  <script src="bindings.js"></script>
+</body></html>

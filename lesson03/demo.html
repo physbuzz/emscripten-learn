@@ -1,0 +1,25 @@
+<html><body>
+<p>Original String: <span id="original">Hello world!</span></p>
+<p>Reversed String: <span id="result">Calculating...</span></p>
+
+<script>
+var Module = {};
+Module.onRuntimeInitialized = function () {
+    const originalString = "Hello world!";
+    document.getElementById("original").innerText = originalString;
+
+    //Allocate the correct length string
+    const length=Module.lengthBytesUTF8(originalString)+1;
+    const inputPtr=Module._malloc(length);
+
+    //Write the JS string to WASM memory, call the desired function, and convert the string back
+    Module.stringToUTF8(originalString, inputPtr, length);
+    const reversedPtr = Module._reverseString(inputPtr);
+    document.getElementById("result").innerText = Module.UTF8ToString(reversedPtr);
+
+    Module._free(inputPtr);
+    Module._free(reversedPtr);
+};
+</script>
+<script src="bindings.js"></script>
+</body></html>
