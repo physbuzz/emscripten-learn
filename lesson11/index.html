@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson11/index.md</title>
+    <style>
+        /* Pygments Syntax Highlighting */
+        pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f8f8f8; }
+.codehilite .c { color: #3D7B7B; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #9C6500 } /* Comment.Preproc */
+.codehilite .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #E40000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #008400 } /* Generic.Inserted */
+.codehilite .go { color: #717171 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #687822 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #767600 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #A45A77 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+        /* Basic reset and fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 2rem 1rem;
+            background-color: #f8f9fa;
+        }
+
+        /* Center column layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #34495e;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Code blocks */
+        .codehilite {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #e1e4e8;
+        }
+
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+            padding: 0.2em 0.4em;
+            background-color: #f6f8fa;
+            border-radius: 3px;
+        }
+
+        .codehilite code {
+            padding: 0;
+            background-color: transparent;
+        }
+
+        /* Links */
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1rem 0;">
+    <a href="../lesson10" style="text-decoration: none; color: #0366d6;">← Previous</a>
+    <a href="../" style="text-decoration: none; color: #0366d6; text-align: center;">Up</a>
+    <a href="../lesson12/" style="text-decoration: none; color: #0366d6; text-align: right;">Next →</a>
+</nav>
+
+<h1>Problem 11: Alignment and Struct Layout</h1>
+<h2>Question</h2>
+<p>Define a C struct that contains mixed data types (e.g., <code>int</code>, <code>float</code>, and <code>char</code>). Write a function to populate the struct and another function to read its values from JavaScript. Demonstrate what happens when memory alignment is incorrect and how to fix it using explicit alignment directives or careful data handling.</p>
+<p><strong>Learning Goals:</strong>
+- Understand memory alignment and struct layout in WebAssembly.
+- Learn to identify and resolve alignment-related issues when sharing complex data structures between C and JavaScript.</p>
+<h2>Hints</h2>
+<ol>
+<li>
+<p><strong>Struct Layout in C</strong>:<br />
+   In C, structs are laid out in memory with padding to ensure proper alignment of each member. For example, an <code>int</code> (4 bytes) may require padding if it follows a <code>char</code> (1 byte).</p>
+</li>
+<li>
+<p><strong>Alignment in WebAssembly</strong>:<br />
+   WebAssembly enforces strict alignment rules. Misaligned memory access can lead to incorrect results or runtime errors.</p>
+</li>
+<li>
+<p><strong>Exporting Structs</strong>:<br />
+   To share a struct between C and JavaScript, you can use a pointer to the struct and access its fields using the <code>Module.HEAP</code> views (e.g., <code>HEAP32</code>, <code>HEAPF32</code>, etc.).</p>
+</li>
+<li>
+<p><strong>Fixing Alignment Issues</strong>:<br />
+   Use <code>__attribute__((packed))</code> to disable padding or rearrange struct members to minimize alignment issues. Be cautious, as disabling padding can reduce performance.</p>
+</li>
+<li>
+<p><strong>Compilation Command</strong>:<br />
+   Use <code>emcc</code> with the <code>-s EXPORTED_FUNCTIONS="['_populateStruct', '_readStruct']"</code> flag to export the required functions.</p>
+</li>
+</ol>
+<h2>Solution</h2>
+<h3>Step 1: Define the Struct and Functions in C</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">// bindings.c</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;emscripten/emscripten.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+
+<span class="c1">// Define a struct with mixed data types</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">         </span><span class="c1">// 4 bytes</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">    </span><span class="c1">// 4 bytes</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">label</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="w">  </span><span class="c1">// 8 bytes (fixed-size string)</span>
+<span class="p">}</span><span class="w"> </span><span class="n">MyStruct</span><span class="p">;</span>
+
+<span class="c1">// Function to populate the struct</span>
+<span class="n">EMSCRIPTEN_KEEPALIVE</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">populateStruct</span><span class="p">(</span><span class="n">MyStruct</span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="n">strncpy</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">label</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">label</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">label</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Ensure null termination</span>
+<span class="p">}</span>
+
+<span class="c1">// Function to read the struct and return its `id` (for demonstration)</span>
+<span class="n">EMSCRIPTEN_KEEPALIVE</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">readStruct</span><span class="p">(</span><span class="n">MyStruct</span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">s</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span><span class="w"> </span><span class="c1">// Return the `id` field for simplicity</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Step 2: Compile the Code</h3>
+<p>Compile the C code into WebAssembly using the following command:</p>
+<div class="codehilite"><pre><span></span><code>emcc<span class="w"> </span>bindings.c<span class="w"> </span>-s<span class="w"> </span><span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_populateStruct&#39;, &#39;_readStruct&#39;, &#39;_malloc&#39;, &#39;_free&#39;]&quot;</span><span class="w"> </span>-o<span class="w"> </span>bindings.js
+</code></pre></div>
+
+<h3>Step 3: Create the HTML and JavaScript Interface</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Demo<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Struct Data:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>Calculating...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="w">    </span><span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// Allocate memory for the struct</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">structSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">16</span><span class="p">;</span><span class="w"> </span><span class="c1">// 4 (int) + 4 (float) + 8 (char[8])</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">structPtr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">structSize</span><span class="p">);</span>
+
+<span class="w">      </span><span class="c1">// Populate the struct</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Test&quot;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_populateStruct</span><span class="p">(</span><span class="nx">structPtr</span><span class="p">,</span><span class="w"> </span><span class="mf">42</span><span class="p">,</span><span class="w"> </span><span class="mf">3.14</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="p">);</span>
+
+<span class="w">      </span><span class="c1">// Read the struct&#39;s `id` field</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_readStruct</span><span class="p">(</span><span class="nx">structPtr</span><span class="p">);</span>
+
+<span class="w">      </span><span class="c1">// Free the allocated memory</span>
+<span class="w">      </span><span class="nx">Module</span><span class="p">.</span><span class="nx">_free</span><span class="p">(</span><span class="nx">structPtr</span><span class="p">);</span>
+
+<span class="w">      </span><span class="c1">// Display the result</span>
+<span class="w">      </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Struct ID: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bindings.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3>Explanation of the Code</h3>
+<ol>
+<li>
+<p><strong>Struct Definition</strong>:<br />
+   The <code>MyStruct</code> struct contains an <code>int</code>, a <code>float</code>, and a fixed-size <code>char</code> array. This layout ensures proper alignment by default.</p>
+</li>
+<li>
+<p><strong>Memory Allocation</strong>:<br />
+   Memory for the struct is allocated in JavaScript using <code>Module._malloc</code>.</p>
+</li>
+<li>
+<p><strong>Populate Function</strong>:<br />
+   The <code>populateStruct</code> function initializes the struct fields, including copying the string into the <code>label</code> array.</p>
+</li>
+<li>
+<p><strong>Read Function</strong>:<br />
+   The <code>readStruct</code> function demonstrates how to access struct fields from JavaScript.</p>
+</li>
+<li>
+<p><strong>Memory Management</strong>:<br />
+   Allocated memory is freed using <code>Module._free</code> to avoid memory leaks.</p>
+</li>
+</ol>
+<h3>Step 4: Fixing Alignment Issues (Optional)</h3>
+<p>If alignment issues arise, you can explicitly disable padding using <code>__attribute__((packed))</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">__attribute__</span><span class="p">((</span><span class="n">packed</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">label</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">}</span><span class="w"> </span><span class="n">MyStruct</span><span class="p">;</span>
+</code></pre></div>
+
+<p>However, this may reduce performance on some architectures. Alternatively, rearrange the struct members to minimize padding:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">    </span><span class="c1">// 4 bytes</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">         </span><span class="c1">// 4 bytes</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">label</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="w">  </span><span class="c1">// 8 bytes</span>
+<span class="p">}</span><span class="w"> </span><span class="n">MyStruct</span><span class="p">;</span>
+</code></pre></div>
+
+<h2>Demo</h2>
+<p>Struct Data: <span id="result">Calculating...</span></p>
+<script>
+var Module = {};
+Module.onRuntimeInitialized = function () {
+  const structSize = 16; // 4 (int) + 4 (float) + 8 (char[8])
+  const structPtr = Module._malloc(structSize);
+  const label = "Test";
+  Module._populateStruct(structPtr, 42, 3.14, label);
+  const id = Module._readStruct(structPtr);
+  Module._free(structPtr);
+  document.getElementById("result").innerHTML = `Struct ID: ${id}`;
+};
+</script>
+<script src="bindings.js"></script>
+    </div>
+</body>
+</html>

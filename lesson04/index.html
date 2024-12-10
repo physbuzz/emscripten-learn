@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson04/index.md</title>
+    <style>
+        /* Pygments Syntax Highlighting */
+        pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f8f8f8; }
+.codehilite .c { color: #3D7B7B; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #9C6500 } /* Comment.Preproc */
+.codehilite .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #E40000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #008400 } /* Generic.Inserted */
+.codehilite .go { color: #717171 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #687822 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #767600 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #A45A77 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+        /* Basic reset and fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 2rem 1rem;
+            background-color: #f8f9fa;
+        }
+
+        /* Center column layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #34495e;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Code blocks */
+        .codehilite {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #e1e4e8;
+        }
+
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+            padding: 0.2em 0.4em;
+            background-color: #f6f8fa;
+            border-radius: 3px;
+        }
+
+        .codehilite code {
+            padding: 0;
+            background-color: transparent;
+        }
+
+        /* Links */
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1rem 0;&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;../lesson03/&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-decoration: none; color: #0366d6;&quot;</span><span class="p">&gt;</span>← Previous<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;../&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-decoration: none; color: #0366d6; text-align: center;&quot;</span><span class="p">&gt;</span>Up<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;../lesson05/&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-decoration: none; color: #0366d6; text-align: right;&quot;</span><span class="p">&gt;</span>Next →<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+
+# Problem 4: Re-Implement Basic Addition with cwrap
+
+## Question
+
+Revisit the addition function from Problem 1, but this time, use `cwrap` to create a JavaScript wrapper for the C function. The goal is to simplify calling the function from JavaScript without directly using `Module._functionName`. 
+
+**Task:**  
+1. Write a C function `int addIntegers(int a, int b);` that adds two integers.  
+2. Compile the C file to WebAssembly using Emscripten.  
+3. Use `cwrap` in JavaScript to create a wrapper for the `addIntegers` function.  
+4. Call the wrapper function from JavaScript and display the result on a webpage.
+
+**Learning Goals:**  
+- Understand how `cwrap` simplifies calling exported C functions.  
+- Observe the difference between direct `Module._functionName` calls and `Module.cwrap()` usage.
+
+---
+
+## Hints
+
+1. **Exporting Functions:**  
+   Use the `-s EXPORTED_FUNCTIONS=&quot;[&#39;_addIntegers&#39;]&quot;` flag during compilation to ensure the `addIntegers` function is available for `cwrap`.
+
+2. **Using cwrap:**  
+   `cwrap` generates a JavaScript wrapper for a C function. Its syntax is:  
+   ```javascript
+   var wrappedFunction = Module.cwrap(&#39;functionName&#39;, &#39;returnType&#39;, [&#39;argType1&#39;, &#39;argType2&#39;]);
+   ```
+   For this problem:  
+   - `functionName` is `&quot;addIntegers&quot;`.  
+   - `returnType` is `&quot;number&quot;`.  
+   - `argType1` and `argType2` are both `&quot;number&quot;`.
+
+3. **Displaying Results:**  
+   Use `document.getElementById` to update the webpage with the result of the addition.
+
+4. **Compilation Command:**  
+   Compile the C file with:  
+   ```bash
+   emcc bindings.c -s EXPORTED_FUNCTIONS=&quot;[&#39;_addIntegers&#39;]&quot; -o bindings.js
+   ```
+
+---
+
+## Solution
+
+### Step 1: C Code (`bindings.c`)
+```c
+#include <span class="p">&lt;</span><span class="nt">emscripten</span><span class="err">/</span><span class="na">emscripten</span><span class="err">.</span><span class="na">h</span><span class="p">&gt;</span>
+
+// Export the function to WebAssembly
+EMSCRIPTEN_KEEPALIVE
+int addIntegers(int a, int b) {
+    return a + b;
+}
+</code></pre></div>
+
+<h3>Step 2: HTML and JavaScript (<code>index.html</code>)</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Demo<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Result of addition (using cwrap):<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>Calculating...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="c1">// Define the Module object</span>
+<span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="nx">Module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="w">      </span><span class="c1">// Wait for the WebAssembly runtime to initialize</span>
+<span class="w">      </span><span class="nx">Module</span><span class="p">.</span><span class="nx">onRuntimeInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// Use cwrap to create a JavaScript wrapper for the C function</span>
+<span class="w">          </span><span class="kd">const</span><span class="w"> </span><span class="nx">addIntegers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;addIntegers&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;number&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;number&#39;</span><span class="p">]);</span>
+
+<span class="w">          </span><span class="c1">// Call the wrapped function</span>
+<span class="w">          </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">addIntegers</span><span class="p">(</span><span class="mf">7</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">);</span>
+
+<span class="w">          </span><span class="c1">// Display the result on the webpage</span>
+<span class="w">          </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`7 + 4 = </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bindings.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3>Step 3: Compilation Command</h3>
+<p>Run the following command to compile the C code into WebAssembly and JavaScript:</p>
+<div class="codehilite"><pre><span></span><code>emcc<span class="w"> </span>bindings.c<span class="w"> </span>-s<span class="w"> </span><span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_addIntegers&#39;]&quot;</span><span class="w"> </span>-o<span class="w"> </span>bindings.js
+</code></pre></div>
+
+<hr />
+<h2>Demo</h2>
+<p>Result of addition (using cwrap): <span id="result">Calculating...</span></p>
+<script>
+var Module = {};
+Module.onRuntimeInitialized = function() {
+    const addIntegers = Module.cwrap('addIntegers', 'number', ['number', 'number']);
+    const result = addIntegers(7, 4);
+    document.getElementById('result').innerHTML = `7 + 4 = ${result}`;
+};
+</script>
+<script src="bindings.js"></script>
+<p>```</p>
+    </div>
+</body>
+</html>

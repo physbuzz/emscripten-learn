@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>curriculum.md</title>
+    <style>
+        /* Pygments Syntax Highlighting */
+        pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f8f8f8; }
+.codehilite .c { color: #3D7B7B; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #FF0000 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666666 } /* Operator */
+.codehilite .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #9C6500 } /* Comment.Preproc */
+.codehilite .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #E40000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #008400 } /* Generic.Inserted */
+.codehilite .go { color: #717171 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #687822 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #880000 } /* Name.Constant */
+.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+.codehilite .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #0000FF } /* Name.Function */
+.codehilite .nl { color: #767600 } /* Name.Label */
+.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #A45A77 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+        /* Basic reset and fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 2rem 1rem;
+            background-color: #f8f9fa;
+        }
+
+        /* Center column layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #34495e;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Code blocks */
+        .codehilite {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #e1e4e8;
+        }
+
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+            padding: 0.2em 0.4em;
+            background-color: #f6f8fa;
+            border-radius: 3px;
+        }
+
+        .codehilite code {
+            padding: 0;
+            background-color: transparent;
+        }
+
+        /* Links */
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Below is an outline of problems with clear statements and associated learning goals, organized by the previously discussed phases. The focus is on the progression of Emscripten-specific features, memory models, and integration strategies, rather than on the physics or math of the examples. Each problem states what the student will do and what they should learn from doing it. The exact details of each solution are not included, as the emphasis is on what skills are developed.</p>
+<hr />
+<h3>Phase 1: Basic Compilation, Memory Management, and I/O Without/With cwrap &amp; ccall</h3>
+<p><strong>Problem 1 (No ccall/ccall): Basic Integer Addition</strong><br />
+<strong>Task:</strong><br />
+Write a C function that takes two integers and returns their sum. Export it to JavaScript without using <code>ccall</code> or <code>cwrap</code>. Manually manage the function’s address and call it via <code>Module._functionName</code>.<br />
+<strong>Learning Goals:</strong><br />
+- Understand how to compile a C function with Emscripten and access it from JavaScript.<br />
+- Learn basic symbol naming (<code>Module._myFunction</code>) and how to call it directly.<br />
+- Get comfortable with the initial Emscripten build commands and environment.</p>
+<p><strong>Problem 2 (No ccall/ccall): Averaging a Float32 Array</strong><br />
+<strong>Task:</strong><br />
+Write a function in C that takes a pointer to a float array and its length, computes the average, and returns a float. Pass a <code>Float32Array</code> from JS to this function without <code>ccall</code>/<code>cwrap</code>, by manually writing the data into <code>HEAPF32</code> and passing the pointer.<br />
+<strong>Learning Goals:</strong><br />
+- Gain hands-on experience with the Emscripten HEAP memory model.<br />
+- Understand how to allocate memory in JS and pass typed arrays to C functions.<br />
+- Learn about indexing <code>HEAPF32</code> and ensuring correct data transfer.</p>
+<p><strong>Problem 3 (No ccall/ccall): Reversing a String &amp; EMSCRIPTEN_KEEPALIVE</strong><br />
+<strong>Task:</strong><br />
+Create a function that takes a <code>const char*</code> string and returns a newly allocated reversed string. Ensure it is not removed by dead code elimination by using <code>EMSCRIPTEN_KEEPALIVE</code>. Manually handle UTF8 conversions in JS.<br />
+<strong>Learning Goals:</strong><br />
+- Understand how to pass strings between JS and C by writing to and reading from the heap.<br />
+- See how <code>EMSCRIPTEN_KEEPALIVE</code> affects symbol visibility and prevents function elimination.<br />
+- Reinforce manual memory management and string handling without convenience wrappers.</p>
+<p><strong>Problem 4 (With cwrap/ccall): Re-Implement Basic Addition</strong><br />
+<strong>Task:</strong><br />
+Take the addition function from Problem 1 and now call it from JavaScript using <code>cwrap</code> to generate a convenient JS function wrapper.<br />
+<strong>Learning Goals:</strong><br />
+- Understand how <code>cwrap</code> simplifies calling exported C functions.<br />
+- Observe the difference between direct <code>Module._myFunction</code> calls and <code>Module.cwrap()</code> usage.</p>
+<p><strong>Problem 5 (With cwrap/ccall): Re-Implement Averaging a Float32 Array</strong><br />
+<strong>Task:</strong><br />
+Use <code>cwrap</code> (or <code>ccall</code>) to call the averaging function from Problem 2. Let <code>cwrap</code> handle pointer and type conversions, and compare the code complexity to the previous direct heap-access method.<br />
+<strong>Learning Goals:</strong><br />
+- Appreciate how <code>cwrap</code> reduces boilerplate code in data passing.<br />
+- Reinforce understanding of how Emscripten’s convenience functions map JS types to C types.</p>
+<p><strong>Problem 6 (With cwrap/ccall): Re-Implement String Reversal</strong><br />
+<strong>Task:</strong><br />
+Use <code>ccall</code> to invoke the string reversal function from Problem 3, noting how string arguments and return values are handled automatically.<br />
+<strong>Learning Goals:</strong><br />
+- Learn how <code>ccall</code> manages string arguments and return values with less manual memory handling.<br />
+- Understand the trade-offs between manual memory control and automated convenience.</p>
+<p><strong>Problem 7: Using Module.print and Module.printErr</strong><br />
+<strong>Task:</strong><br />
+Create a C function that prints output using <code>printf</code> and verify that the output appears in the browser console through <code>Module.print</code> and <code>Module.printErr</code>.<br />
+<strong>Learning Goals:</strong><br />
+- Understand how standard I/O from C maps into JavaScript’s logging facilities.<br />
+- Learn how to configure or redirect output streams in an Emscripten module.</p>
+<hr />
+<h3>Phase 2: Advanced Memory, Persistent Data, Canvas Integration, and MEMFS</h3>
+<p><strong>Problem 8: Persistent Memory Array</strong><br />
+<strong>Task:</strong><br />
+Implement a function that stores an array of floats persistently between calls (global static memory in C) and another function that retrieves it. Update and read this data over multiple frames from JS.<br />
+<strong>Learning Goals:</strong><br />
+- Understand that global data in C persists across multiple JS calls.<br />
+- Learn best practices for handling persistent simulation state.</p>
+<p><strong>Problem 9: Canvas Drawing from a Shared Memory Buffer</strong><br />
+<strong>Task:</strong><br />
+Allocate a buffer in the Emscripten heap that represents image data or particle positions. Continuously update it in C, and from JS draw these updated points/pixels on an HTML <code>&lt;canvas&gt;</code>.<br />
+<strong>Learning Goals:</strong><br />
+- Learn how to directly access the same memory buffer from both C and JS for rendering.<br />
+- Understand alignment and structure issues in shared data meant for graphics operations.</p>
+<p><strong>Problem 10: Using MEMFS to Store/Load Data</strong><br />
+<strong>Task:</strong><br />
+Write a function in C that saves the current simulation state (e.g., positions) to a file on the in-memory filesystem (MEMFS), and another that loads it back. From JS, trigger saves/loads and confirm the state restoration.<br />
+<strong>Learning Goals:</strong><br />
+- Gain experience with the Emscripten virtual filesystem.<br />
+- Understand how to simulate file I/O within a WebAssembly environment.</p>
+<p><strong>Problem 11: Alignment and Struct Layout</strong><br />
+<strong>Task:</strong><br />
+Define a C struct that contains mixed data types. Write a function to populate it, and another to read it from JS. Ensure correct memory alignment and demonstrate what happens if alignment is off. Fix any issues with explicit alignment directives or careful data handling.<br />
+<strong>Learning Goals:</strong><br />
+- Develop a clear understanding of memory alignment and data layout in Wasm.<br />
+- Learn to diagnose and solve alignment-related issues when sharing complex data structures.</p>
+<hr />
+<h3>Phase 3: Benchmarking and Optimization</h3>
+<p><strong>Problem 12: Prime Sieve Benchmark (No Optimization)</strong><br />
+<strong>Task:</strong><br />
+Implement a simple Sieve of Eratosthenes in C and measure its run time from JS (e.g., by using <code>performance.now()</code>).<br />
+<strong>Learning Goals:</strong><br />
+- Learn how to benchmark code running in the browser.<br />
+- Understand baseline performance before optimization.</p>
+<p><strong>Problem 13: Re-Compile with -O3</strong><br />
+<strong>Task:</strong><br />
+Recompile the prime sieve with <code>-O3</code> and measure performance again. Compare run times and observe the difference.<br />
+<strong>Learning Goals:</strong><br />
+- Understand how compiler optimization flags affect performance.<br />
+- See how Emscripten maps typical C optimization approaches into WebAssembly.</p>
+<p><strong>Problem 14: O(N²) Distance Calculation and Flags</strong><br />
+<strong>Task:</strong><br />
+Implement an O(N²) pairwise distance calculation. Experiment with <code>-O3</code>, <code>-s WASM=1</code>, and other flags. Observe memory and runtime differences, and note any gains or issues.<br />
+<strong>Learning Goals:</strong><br />
+- Learn to tune performance by trying different compiler and linker flags.<br />
+- Gain insight into how memory usage patterns impact performance.</p>
+<hr />
+<h3>Phase 4: External Libraries (Eigen and FFT)</h3>
+<p><strong>Problem 15: Eigen Integration for Matrix Operations</strong><br />
+<strong>Task:</strong><br />
+Integrate Eigen (header-only) and implement a matrix multiplication in C. Compile with Emscripten and run it in the browser, verifying correctness.<br />
+<strong>Learning Goals:</strong><br />
+- Learn how to include and compile external libraries with Emscripten.<br />
+- Understand how complex linear algebra computations fit into a WebAssembly workflow.</p>
+<p><strong>Problem 16: FFT with an External Library</strong><br />
+<strong>Task:</strong><br />
+Link in a small FFT library (like KissFFT) and implement a function to take a time-domain signal from JS, run FFT in C, and return frequency-domain data back to JS.<br />
+<strong>Learning Goals:</strong><br />
+- Understand how to link against external libraries and manage their memory and interfaces.<br />
+- Gain experience integrating more advanced computational routines into your web pipeline.</p>
+<hr />
+<h3>Phase 5: End-to-End Scientific Simulation Project</h3>
+<p><strong>Problem 17: Monte-Carlo Simulation with Periodic Boundaries</strong><br />
+<strong>Task:</strong><br />
+Implement a Monte-Carlo step in C that updates particle positions in a box with periodic boundary conditions.<br />
+<strong>Learning Goals:</strong><br />
+- Integrate memory management, persistent state, and problem-solving logic in a complex scenario.</p>
+<p><strong>Problem 18: NPT Ensemble Control from JS</strong><br />
+<strong>Task:</strong><br />
+Expose functions to tune parameters like temperature, density, or pressure from JavaScript. Run the simulation and observe the system’s evolution.<br />
+<strong>Learning Goals:</strong><br />
+- Manage simulation parameters dynamically and connect user input to the C simulation engine.</p>
+<p><strong>Problem 19: Compute Pair Correlation Functions and FFT</strong><br />
+<strong>Task:</strong><br />
+After equilibrating your particle system, compute the pair correlation function. Use the previously integrated FFT library to process the correlation data, and return these results for visualization in JS.<br />
+<strong>Learning Goals:</strong><br />
+- Combine simulation data with advanced numerical analysis.<br />
+- Validate that external math routines work in tandem with the simulation.</p>
+<p><strong>Problem 20: Final Visualization and Analysis Page</strong><br />
+<strong>Task:</strong><br />
+Put it all together: run the simulation in real-time, control it from the browser, store/load states with MEMFS, apply FFT-based analysis, and visualize results via canvas charts. Compare performance with and without optimization flags.<br />
+<strong>Learning Goals:</strong><br />
+- Demonstrate mastery of all learned concepts—memory management, external libraries, I/O, optimization, and interactivity.<br />
+- Show a complete end-to-end scientific workflow hosted in the browser.</p>
+<hr />
+<p>This sequence of problems starts with the very basics and moves toward increasingly complex tasks, each with explicitly stated learning goals. The student can see at every step what Emscripten concept or technique they are building toward, ensuring a clear progression and a solid foundation for advanced applications.</p>
+    </div>
+</body>
+</html>
