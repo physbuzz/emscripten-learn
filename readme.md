@@ -1,3 +1,5 @@
+[View on github pages.](https://physbuzz.github.io/emscripten-learn/)
+
 I don't know anything about emscripten+WASM, so I'm going through the following process:
 
 1. Generate tutorials (mostly ChatGPT),
