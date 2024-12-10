@@ -1,10 +1,10 @@
 I don't know anything about emscripten+WASM, so I'm going through the following process:
 
-1. Generating tutorials (mostly ChatGPT),
-2. Compiling and running the demos as I go along,
-3. Cleaning up the tutorials and improving them.
+1. Generate tutorials (mostly ChatGPT),
+2. Compile and run the demos as I go along (lots of issues crop up here),
+3. Clean up the tutorials and improv them as I go along.
 
-I notice that the tutorials aren't that great without lots of editing. 
+I notice that the tutorials aren't that great without lots of editing. The edited / cleaned up examples that I'm going for are in examples/example1.md and examples/example2.md.
 
 ## Phase 1: Basic Compilation, Memory Management, and I/O
 
